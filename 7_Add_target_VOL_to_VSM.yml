@@ -1,0 +1,23 @@
+- name: Logical Device Module
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../ansible_vault_vars/ansible_vault_storage_var.yml
+  vars:
+    connection_info:
+      address: "{{ storage_address }}"
+      username: "{{ vault_storage_username }}"
+      password: "{{ vault_storage_secret }}"
+  tasks:
+    - name: Add the above resources to an existing Resource Group by ID
+      hitachivantara.vspone_block.vsp.hv_resource_group:
+        connection_info: "{{ connection_info }}"
+        spec:
+          state: "add_resource"
+          id: "{{vsm_id}}"
+          ldevs: "{{ldev}}"
+          ports: "{{port}}"
+          host_groups:
+            - port: "{{hg_port}}"
+              name: "{{hg_name}}"
+      register: result

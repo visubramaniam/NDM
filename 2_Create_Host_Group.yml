@@ -1,0 +1,27 @@
+- name: Logical Device Module
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../ansible_vault_vars/ansible_vault_storage_var.yml
+  vars:
+    connection_info:
+      address: "{{ storage_address }}"
+      username: "{{ vault_storage_username }}"
+      password: "{{ vault_storage_secret }}"
+  tasks:
+    - name: Create hostgroup
+      hitachivantara.vspone_block.vsp.hv_hg:
+        connection_info: "{{ connection_info }}"
+        state: "present"
+        spec:
+          name: "{{hg_name}}"
+          port: "{{hg_port}}"
+          host_mode: "{{hg_mode}}"
+          host_mode_options: "{{hg_mode_option}}"
+          ldevs: "{{ldev}}"
+          wwns:
+            - wwn: "{{wwn1}}"
+              nick_name: "{{wwn_nn1}}"
+            - wwn: "{{wwn2}}"
+              nick_name: "{{wwn_nn2}}"
+      register: result

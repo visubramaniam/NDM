@@ -1,0 +1,11 @@
+- import_playbook: Create_Virtual_Storage_Machine
+- import_playbook: Create_Host_Group
+- import_playbook: Register_Host's_WWN
+- import_playbook: Add_HostGroup_to_VSM
+- import_playbook: Create_target_VOL
+- import_playbook: Delete_Virtual_LDEVID
+- import_playbook: Add_target_VOL_to_VSM
+- import_playbook: GAD_reservation_allocation_for_virtual_attributes
+- import_playbook: Add_LUN_path_for_target_VOL
+- import_playbook: Create_Pair
+- import_playbook: SWAP

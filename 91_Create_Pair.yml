@@ -1,0 +1,22 @@
+- name: Logical Device Module
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../ansible_vault_vars/ansible_vault_storage_var.yml
+  vars:
+    connection_info:
+      address: "{{ storage_address }}"
+      username: "{{ vault_storage_username }}"
+      password: "{{ vault_storage_secret }}"
+  tasks:
+    - name: Create a GAD pair with provisioned secondary volume id
+      hitachivantara.vspone_block.vsp.hv_gad:
+        connection_info: "{{ connection_info }}"
+        secondary_connection_info: "{{ secondary_connection_info }}"
+        spec:
+          copy_group_name: "{{copy_group_name}}"
+          copy_pair_name: "{{copy_pair_name}}"
+          primary_volume_id: "{{primary_volume_id}}"
+          provisioned_secondary_volume_id: "{{provisioned_secondary_volume_id}}"
+          quorum_disk_id: "{{quorum_disk_id}}"
+      register: result
